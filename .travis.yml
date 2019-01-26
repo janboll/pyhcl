@@ -1,11 +1,12 @@
 language: python
-sudo: false
+dist: xenial
 python:
   - "2.7"
   - "3.3"
   - "3.4"
   - "3.5"
   - "3.6"
+  - "3.7"
 # command to install dependencies
 install:
   - "pip install ."
@@ -22,12 +23,13 @@ jobs:
     install:
     - pip install black
     script:
-    - black --check -S src
+    - black --check --diff -S src
 
 # Deploy to pypi on tagged commit
 deploy:
 - provider: pypi
   user: $PYPI_USERNAME
   password: $PYPI_PASSWORD
+  distributions: sdist
   on:
     tags: true
